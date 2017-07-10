@@ -79,71 +79,6 @@ def generator(samples, batch_size=32):
             yield sklearn.utils.shuffle(X_train, y_train)
 
 
-def generator2(samples, batch_size=32):
-    num_samples = len(samples)
-    while 1: # Loop forever so the generator never terminates
-        sklearn.utils.shuffle(samples)
-        for offset in range(0, num_samples, batch_size):
-            batch_samples = samples[offset:offset+batch_size]
-            images = []
-            angles = []
-            for batch_sample in batch_samples:
-                name_center = './data/IMG/'+batch_sample[0].split('/')[-1]
-                name_left = './data/IMG/'+batch_sample[1].split('/')[-1]
-                name_right = './data/IMG/'+batch_sample[2].split('/')[-1]
-
-                center_image = cv2.imread(name_center)
-                #center_image = preprocess_image(center_image)
-                if center_image is None:
-                  print(name_center)
-                center_angle = float(batch_sample[3])
-                images.append(center_image)
-                print(center_image.shape) 
-                angles.append(center_angle)
-
-                #center_image_flipped = np.fliplr(center_image)
-                #center_angle_flipped  = -center_angle
-                #images.append(center_image_flipped)
-                #angles.append(center_angle_flipped)
-
-                # create adjusted steering measurements for the side camera images
-                correction = 0.25 # this is a parameter to tune
-                steering_left = center_angle + correction
-                steering_right = center_angle - correction
-
-                # read in images from center, left and right cameras
-                #left_image = np.array(cv2.imread(name_left), dtype=np.float32)
-                #left_image = preprocess_image(left_image)
-                #right_image = np.array(cv2.imread(name_right), dtype=np.float32)
-                #right_image = preprocess_image(right_image)
-                #images.extend([left_image, right_image])
-                #angles.extend([steering_left, steering_right])
-
-            X_train = np.array(images)
-            y_train = np.array(angles)
-            yield sklearn.utils.shuffle(X_train, y_train)
-
-
-def generator_r(samples, batch_size=32):
-    num_samples = len(samples)
-    while 1: # Loop forever so the generator never terminates
-        sklearn.utils.shuffle(samples)
-        for offset in range(0, num_samples, batch_size):
-            batch_samples = samples[offset:offset+batch_size]
-            images = []
-            angles = []
-            for batch_sample in batch_samples:
-                name_center = './data/IMG/'+batch_sample[0].split('/')[-1]
-                center_image = cv2.imread(name_center)
-                center_angle = float(batch_sample[3])
-                images.append(center_image)
-                angles.append(center_angle)
-
-            X_train = images
-            y_train = angles
-            yield sklearn.utils.shuffle(X_train, y_train)
-
-
 from keras.models import Sequential
 from keras.layers.core import Flatten, Dense, Dropout
 from keras.layers import Cropping2D, Lambda
@@ -170,55 +105,8 @@ def VGG_16():
     model.add(MaxPooling2D((2,2), strides=(2,2)))
     model.add(Dropout(0.5))
 
-#    model.add(Convolution2D(64, 3, 3, activation='relu'))
-#    model.add(Convolution2D(64, 3, 3, activation='relu'))
-#    model.add(MaxPooling2D((2,2), strides=(2,2)))
-    #model.add(Dropout(0.5))
-
-    #model.add(Convolution2D(64, 3, 3, activation='relu'))
-    #model.add(MaxPooling2D((2,2), strides=(2,2)))
-
-
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(64, 3, 3, activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(64, 3, 3, activation='relu'))
-#    model.add(MaxPooling2D((2,2), strides=(2,2)))
-
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(128, 3, 3, activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(128, 3, 3, activation='relu'))
-#    model.add(MaxPooling2D((2,2), strides=(2,2)))
-
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(3, 3, 256, activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(3, 3, 256, activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(3, 3, 256, activation='relu'))
-#    model.add(MaxPooling2D((2,2), strides=(2,2)))
-
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, 3, 3, activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, 3, 3, activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, 3, 3, activation='relu'))
-#    model.add(MaxPooling2D((2,2), strides=(2,2)))
-
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, 3, 3, activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, 3, 3, activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, 3, 3, activation='relu'))
-#    model.add(MaxPooling2D((2,2), strides=(2,2)))
-
     model.add(Flatten())
-#    model.add(Dense(512))
     model.add(Dense(128, activation='relu'))
-#    model.add(Dropout(0.5))
     model.add(Dense(64, activation='relu'))
     model.add(Dropout(0.5))
     model.add(Dense(32))
