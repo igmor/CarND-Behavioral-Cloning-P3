@@ -1,8 +1,6 @@
-#**Behavioral Cloning** 
+# **Behavioral Cloning** 
 
-##Writeup Template
-
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+## Writeup Report
 
 ---
 
@@ -25,13 +23,13 @@ The goals / steps of this project are the following:
 [image5]: ./examples/from_left_to_right_2.jpg "Recovery Image"
 [image6]: ./examples/from_left_to_right_3.jpg "Recovery Image"
 [image7]: ./examples/center_image.jpg "Normal Image"
-[image8]: ./examples/center_image_flipped.png "Flipped Image"
+[image8]: ./examples/center_image_flipped.jpg "Flipped Image"
 [image9]: ./examples/left.jpg "Left Image"
 [image10]: ./examples/center.jpg "Center Image"
 [image11]: ./examples/right.jpg "Right Image"
 
 ## Rubric Points
-###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
+### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
 
 ---
 ### Files Submitted & Code Quality
@@ -101,7 +99,7 @@ The final model architecture (model.py lines 89-113) consisted of a convolution 
 
 ![alt text][image1]
 
-####3. Creation of the Training Set & Training Process
+#### 3. Creation of the Training Set & Training Process
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
 
@@ -124,9 +122,9 @@ To augment the data sat, I also flipped images and angles thinking that this wou
 
 I also added left and right camera images to the training set with corrected stearing angle +0.3 for the left camera image and -0.3 for the right one. That provided more data points for NN. 0.3 correction angle was picked experimentally and helped a lot during solving a  bias towards center line driving of neural network.
 
-![alt text][image9]
-![alt text][image10]
-![alt text][image11]
+![alt text][image9](width=300)
+![alt text][image10](width=300)
+![alt text][image11](width=300)
 
 
 After the collection process, I had about 7500 data points. I then preprocessed this data by converting the images into RGB color space from BGR, then cropping the image by removing top part with the sky and bottom part with mostly car's hood as insignificant for training and finally normalized pixels to [0, 1] interval. 
