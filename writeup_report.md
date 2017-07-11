@@ -122,9 +122,9 @@ To augment the data sat, I also flipped images and angles thinking that this wou
 
 I also added left and right camera images to the training set with corrected stearing angle +0.3 for the left camera image and -0.3 for the right one. That provided more data points for NN. 0.3 correction angle was picked experimentally and helped a lot during solving a  bias towards center line driving of neural network.
 
-![alt text][image9]{:width="80%"}
-![alt text][image10]{:width="80%"}
-![alt text][image11]{:width="80%"}
+![alt text][image9]
+![alt text][image10]
+![alt text][image11]
 
 
 After the collection process, I had about 7500 data points. I then preprocessed this data by converting the images into RGB color space from BGR, then cropping the image by removing top part with the sky and bottom part with mostly car's hood as insignificant for training and finally normalized pixels to [0, 1] interval. 
